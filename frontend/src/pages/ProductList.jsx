@@ -24,7 +24,8 @@ function ProductList() {
     try {
       // Build query parameters based on filters
       const queryParams = new URLSearchParams(filters).toString();
-      const response = await axios.get(`http://localhost:3000/api/products?${queryParams}`);
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/products?${queryParams}`);
+
 
       if (response.data.success) {
         setProducts(response.data.data);
