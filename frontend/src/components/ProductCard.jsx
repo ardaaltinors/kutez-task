@@ -18,13 +18,13 @@ function ProductCard({ product }) {
   const popularityRating = (product.popularityScore / 100) * 5;
 
   return (
-    <div className="border rounded-lg shadow-lg p-4">
+    <div className="rounded-lg p-4">
       <img
         src={product.images[selectedColor]}
         alt={product.name}
-        className="w-full h-48 object-cover rounded"
+        className="w-full h-48 object-cover rounded-lg"
       />
-      <h2 className="text-lg font-bold mt-2">{product.name}</h2>
+      <h2 className="text-base font-bold mt-2">{product.name}</h2>
       <p className="text-gray-600">${parseFloat(product.price).toFixed(2)} USD</p>
       <div className="mt-2 flex items-center">
         <div
