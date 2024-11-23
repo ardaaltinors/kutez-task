@@ -1,5 +1,8 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar as solidStar, faStarHalfAlt } from '@fortawesome/free-solid-svg-icons';
+import { faStar as regularStar } from '@fortawesome/free-regular-svg-icons';
 
 function ProductCard({ product }) {
     const [selectedColor, setSelectedColor] = useState("yellow");
@@ -17,16 +20,36 @@ function ProductCard({ product }) {
 
     const popularityRating = (product.popularityScore / 100) * 5;
 
-    // Generate star rating
     const renderStars = () => {
         const stars = [];
         for (let i = 1; i <= 5; i++) {
             if (i <= Math.floor(popularityRating)) {
-                stars.push(<span key={i}>&#9733;</span>); // Solid star
+                stars.push(
+                    <FontAwesomeIcon
+                        key={i}
+                        icon={solidStar}
+                        className="text-yellow-500"
+                        aria-hidden="true"
+                    />
+                );
             } else if (i - popularityRating <= 0.5) {
-                stars.push(<span key={i}>&#9734;</span>); // Half star
+                stars.push(
+                    <FontAwesomeIcon
+                        key={i}
+                        icon={faStarHalfAlt}
+                        className="text-yellow-500"
+                        aria-hidden="true"
+                    />
+                );
             } else {
-                stars.push(<span key={i}>&#9734;</span>); // Empty star
+                stars.push(
+                    <FontAwesomeIcon
+                        key={i}
+                        icon={regularStar}
+                        className="text-yellow-500"
+                        aria-hidden="true"
+                    />
+                );
             }
         }
         return stars;
@@ -50,23 +73,28 @@ function ProductCard({ product }) {
                     className="w-5 h-5 rounded-full cursor-pointer"
                     style={{ backgroundColor: "#E6CA97" }}
                     onClick={() => handleColorChange("yellow")}
+                    aria-label="Yellow Gold"
                 ></div>
                 <div
                     className="w-5 h-5 rounded-full cursor-pointer ml-2"
                     style={{ backgroundColor: "#E1A4A9" }}
                     onClick={() => handleColorChange("rose")}
+                    aria-label="Rose Gold"
                 ></div>
                 <div
                     className="w-5 h-5 rounded-full cursor-pointer ml-2"
                     style={{ backgroundColor: "#D9D9D9" }}
                     onClick={() => handleColorChange("white")}
+                    aria-label="White Gold"
                 ></div>
             </div>
             <p className="text-color-text font-avenir font-normal mt-2">
                 {colorNames[selectedColor]}
             </p>
             <div className="mt-2 text-sm flex items-center">
-                <span className="flex text-yellow-500">{renderStars()}</span>
+                <span className="flex" aria-hidden="true">
+                    {renderStars()}
+                </span>
                 <span className="ml-2 font-avenir font-normal">
                     {popularityRating.toFixed(1)}/5
                 </span>
