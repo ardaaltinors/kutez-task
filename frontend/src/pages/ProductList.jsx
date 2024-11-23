@@ -23,7 +23,7 @@ function ProductList() {
 
   const scrollLeft = () => {
     scrollContainerRef.current.scrollBy({
-      left: -200, 
+      left: -200,
       behavior: "smooth",
     });
   };
@@ -43,25 +43,25 @@ function ProductList() {
       <div className="relative">
         {/* Scrollable Container */}
         <div
-          className="flex overflow-x-auto space-x-24 pb-4"
+          className="flex overflow-x-auto space-x-4 sm:space-x-6 md:space-x-8 lg:space-x-12 pb-4"
           ref={scrollContainerRef}
         >
           {products.map((product) => (
-            <div key={product.id} className="flex-shrink-0 w-64">
+            <div key={product.id} className="flex-shrink-0 w-full sm:w-64">
               <ProductCard product={product} />
             </div>
           ))}
         </div>
         {/* Left Arrow */}
         <button
-          className="absolute left-[-3rem] top-1/2 transform -translate-y-1/2 p-3 rounded-full text-5xl"
+          className="absolute left-2 sm:left-[-3rem] top-1/2 transform -translate-y-1/2 p-2 sm:p-3 rounded-full text-3xl sm:text-5xl bg-white"
           onClick={scrollLeft}
         >
           &#x2039; {/* Left Arrow Icon */}
         </button>
         {/* Right Arrow */}
         <button
-          className="absolute right-[-3rem] top-1/2 transform -translate-y-1/2 p-3 rounded-full text-5xl"
+          className="absolute right-2 sm:right-[-3rem] top-1/2 transform -translate-y-1/2 p-2 sm:p-3 rounded-full text-3xl sm:text-5xl bg-white"
           onClick={scrollRight}
         >
           &#x203A; {/* Right Arrow Icon */}

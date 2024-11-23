@@ -37,7 +37,7 @@ function ProductCard({ product }) {
             <img
                 src={product.images[selectedColor]}
                 alt={product.name}
-                className="w-full h-48 object-cover rounded-lg"
+                className="w-full h-40 sm:h-48 object-cover rounded-lg"
             />
             <h2 className="text-product-title font-montserrat font-medium mt-2">
                 {product.name}
@@ -67,7 +67,9 @@ function ProductCard({ product }) {
             </p>
             <div className="mt-2 text-sm flex items-center">
                 <span className="flex text-yellow-500">{renderStars()}</span>
-                <span className="ml-2 font-avenir font-normal">{popularityRating.toFixed(1)}/5</span>
+                <span className="ml-2 font-avenir font-normal">
+                    {popularityRating.toFixed(1)}/5
+                </span>
             </div>
         </div>
     );
