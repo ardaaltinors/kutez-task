@@ -51,17 +51,23 @@ function ProductList() {
   };
 
   const scrollLeft = () => {
-    scrollContainerRef.current.scrollBy({
-      left: -200,
-      behavior: "smooth",
-    });
+    if (scrollContainerRef.current) {
+      const itemWidth = scrollContainerRef.current.firstChild.getBoundingClientRect().width;
+      scrollContainerRef.current.scrollBy({
+        left: -itemWidth,
+        behavior: "smooth",
+      });
+    }
   };
 
   const scrollRight = () => {
-    scrollContainerRef.current.scrollBy({
-      left: 200,
-      behavior: "smooth",
-    });
+    if (scrollContainerRef.current) {
+      const itemWidth = scrollContainerRef.current.firstChild.getBoundingClientRect().width;
+      scrollContainerRef.current.scrollBy({
+        left: itemWidth,
+        behavior: "smooth",
+      });
+    }
   };
 
   return (
