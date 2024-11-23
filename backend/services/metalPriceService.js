@@ -6,7 +6,7 @@ import { config } from "../config/index.js";
 const GOLD_PRICE_CACHE_TTL = 60 * 4 * 60; // 4 hours
 const cache = new NodeCache({ stdTTL: GOLD_PRICE_CACHE_TTL, checkperiod: 120 });
 
-const METAL_PRICE_API_URL = "https://api.metalpriceapi.com/v1/latest";
+const METAL_PRICE_API_URL = "https://www.goldapi.io/api/XAU/USD";
 
 // Fetches the current gold price in USD
 export const getGoldPrice = async () => {
@@ -22,17 +22,16 @@ export const getGoldPrice = async () => {
         console.log("cache NOT hit, fetchıng from the api...");
 
         const response = await axios.get(METAL_PRICE_API_URL, {
-            params: {
-                api_key: config.METAL_PRICE_API_KEY,
-                base: "USD",
-                currencies: "XAU",
+            headers: {
+                "x-access-token": config.METAL_PRICE_API_KEY,
+                "Content-Type": "application/json"
             }
         });
 
         console.log("api response:", response.data);
 
-        if (response.data && response.data.success) {
-            const goldPrice = response.data.rates.XAU;
+        if (response.data && response.data.price) {
+            const goldPrice = response.data.price_gram_24k;
 
             // Store the fetched gold price in the cache
             cache.set("goldPrice", goldPrice);
