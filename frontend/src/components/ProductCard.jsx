@@ -4,6 +4,13 @@ import PropTypes from "prop-types";
 function ProductCard({ product }) {
   const [selectedColor, setSelectedColor] = useState("yellow");
 
+  // Map colors to human-readable names
+  const colorNames = {
+    yellow: "Yellow Gold",
+    rose: "Rose Gold",
+    white: "White Gold",
+  };
+
   const handleColorChange = (color) => {
     setSelectedColor(color);
   };
@@ -21,18 +28,22 @@ function ProductCard({ product }) {
       <p className="text-gray-600">${parseFloat(product.price).toFixed(2)} USD</p>
       <div className="mt-2 flex items-center">
         <div
-          className="w-5 h-5 rounded-full bg-yellow-500 cursor-pointer"
+          className="w-5 h-5 rounded-full cursor-pointer"
+          style={{ backgroundColor: "#E6CA97" }}
           onClick={() => handleColorChange("yellow")}
         ></div>
         <div
-          className="w-5 h-5 rounded-full bg-pink-500 cursor-pointer ml-2"
+          className="w-5 h-5 rounded-full cursor-pointer ml-2"
+          style={{ backgroundColor: "#E1A4A9" }}
           onClick={() => handleColorChange("rose")}
         ></div>
         <div
-          className="w-5 h-5 rounded-full bg-gray-400 cursor-pointer ml-2"
+          className="w-5 h-5 rounded-full cursor-pointer ml-2"
+          style={{ backgroundColor: "#D9D9D9" }}
           onClick={() => handleColorChange("white")}
         ></div>
       </div>
+      <p className="mt-2 text-sm">{colorNames[selectedColor]}</p>
       <p className="mt-2 text-sm">Popularity: {popularityRating.toFixed(1)}/5</p>
     </div>
   );
