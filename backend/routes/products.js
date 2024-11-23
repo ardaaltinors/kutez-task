@@ -19,12 +19,47 @@ const getProducts = () => {
     return JSON.parse(data);
 };
 
-// Get all products with dynamic pricing
+// parse query parameters
+const parseQueryParams = (query) => {
+    const filters = {};
+
+    // Price Range
+    if (query.minPrice) {
+        const minPrice = parseFloat(query.minPrice);
+        if (!isNaN(minPrice)) {
+            filters.minPrice = minPrice;
+        }
+    }
+    if (query.maxPrice) {
+        const maxPrice = parseFloat(query.maxPrice);
+        if (!isNaN(maxPrice)) {
+            filters.maxPrice = maxPrice;
+        }
+    }
+
+    // Popularity Score Range
+    if (query.minPopularity) {
+        const minPopularity = parseInt(query.minPopularity, 10);
+        if (!isNaN(minPopularity)) {
+            filters.minPopularity = minPopularity;
+        }
+    }
+    if (query.maxPopularity) {
+        const maxPopularity = parseInt(query.maxPopularity, 10);
+        if (!isNaN(maxPopularity)) {
+            filters.maxPopularity = maxPopularity;
+        }
+    }
+
+    return filters;
+};
+
+// Get all products with dynamic pricing and optional filtering
 router.get("/", async (req, res) => {
     try {
         const products = getProducts();
 
-        // Fetch gold price from api
+        // Fetch gold price from API
         const goldPrice = await getGoldPrice();
 
         // Calculate price for each product
@@ -33,13 +68,35 @@ router.get("/", async (req, res) => {
             const price = (popularityScore + 1) * weight * goldPrice;
             return {
                 ...product,
-                price: price.toFixed(2)
+                price: parseFloat(price.toFixed(2))
             };
         });
 
+        // Parse and extract filter criteria from query parameters
+        const filters = parseQueryParams(req.query);
+
+        // Apply filtering based on provided criteria
+        let filteredProducts = productsWithPrice;
+
+        if (filters.minPrice !== undefined) {
+            filteredProducts = filteredProducts.filter(product => product.price >= filters.minPrice);
+        }
+
+        if (filters.maxPrice !== undefined) {
+            filteredProducts = filteredProducts.filter(product => product.price <= filters.maxPrice);
+        }
+
+        if (filters.minPopularity !== undefined) {
+            filteredProducts = filteredProducts.filter(product => product.popularityScore >= filters.minPopularity);
+        }
+
+        if (filters.maxPopularity !== undefined) {
+            filteredProducts = filteredProducts.filter(product => product.popularityScore <= filters.maxPopularity);
+        }
+
         res.json({
             success: true,
-            data: productsWithPrice
+            data: filteredProducts
         });
     } catch (error) {
         res.status(500).json({
