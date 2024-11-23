@@ -2,6 +2,7 @@ import { Router } from "express";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import { getGoldPrice } from "../services/metalPriceService.js";
 
 const router = Router();
 
@@ -18,18 +19,18 @@ const getProducts = () => {
     return JSON.parse(data);
 };
 
-// Gold price in USD per gram (TODO: USE API)
-const GOLD_PRICE = 60;
-
-// Get all products
-router.get("/", (req, res) => {
+// Get all products with dynamic pricing
+router.get("/", async (req, res) => {
     try {
         const products = getProducts();
+
+        // Fetch gold price from api
+        const goldPrice = await getGoldPrice();
 
         // Calculate price for each product
         const productsWithPrice = products.map(product => {
             const { popularityScore, weight } = product;
-            const price = (popularityScore + 1) * weight * GOLD_PRICE;
+            const price = (popularityScore + 1) * weight * goldPrice;
             return {
                 ...product,
                 price: price.toFixed(2)
