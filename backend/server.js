@@ -4,8 +4,11 @@ import { config } from "./config/index.js";
 import routes from "./routes/index.js";
 import loggerMiddleware from "./middlewares/logger.js";
 
+// Import the Express app for serverless function
+import app from "./api/index.js";
+
 // Initialize Express
-const app = express();
+// const app = express();
 
 // Apply middlewares
 app.use(cors()); // Enable CORS
