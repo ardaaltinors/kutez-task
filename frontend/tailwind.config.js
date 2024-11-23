@@ -5,8 +5,21 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      // Define custom font families
+      fontFamily: {
+        'avenir': ['Avenir', 'sans-serif'],
+        'montserrat': ['Montserrat', 'sans-serif'],
+      },
+      // Define custom font sizes
+      fontSize: {
+        'product-list-heading': '45px',
+        'rating': '14px',
+        'color-text': '12px',
+        'price': '15px',
+        'product-title': '15px',
+      },
+    },
   },
   plugins: [],
 }
-

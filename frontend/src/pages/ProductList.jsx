@@ -37,7 +37,9 @@ function ProductList() {
 
   return (
     <div className="container mx-auto px-4 relative">
-      <h1 className="text-center text-2xl font-bold my-6">Product List</h1>
+      <h1 className="text-product-list-heading font-avenir font-normal text-center my-6">
+        Product List
+      </h1>
       <div className="relative">
         {/* Scrollable Container */}
         <div
